@@ -62,6 +62,24 @@
       <headless-button id="options-button"></headless-button>
       <p>The <code>priority</code> field set inside the <code>properties</code> property will be applied as well.</p>
     </theme-provider>
+    <h3>Button theme - Composable themes</h3>
+    <theme-provider>
+      <div slot="button">
+        <style slot="button">
+          theme-provider {
+            headless-button::part(base) {
+              /* color: blue; */
+            }
+          }
+        </style>
+      </div>
+
+      <headless-button priority="primary">
+        <div slot="content">test</div>
+      </headless-button>
+      <p>Currently trying to figure out how to scope the <code>theme-provider</code> styles within the component. Only managed to get the theme styles working by disabling the shadow DOM in theme components because the styles aren't being properly applied to <code>parts</code> of components that are slotted into the shadow DOM.</p>
+    </theme-provider>
+
     <script>
       document.querySelectorAll('#options-button').forEach(button => {
         button.properties = {priority: 'primary', text: 'foo', disabled: true, class: 'foo'}
