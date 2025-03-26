@@ -41,6 +41,18 @@
     <headless-button id="options-button"></headless-button>
     <p>All button attributes can be provided in a <code>properties</code> property instead, but that requires some Javascript which isn't ideal.</p>
     <theme-provider>
+      <!-- Uncomment to test overriding the button theme
+        <div slot="button">
+          <style slot="button">
+            theme-provider {
+              headless-button::part(base) {
+                color: blue;
+              }
+            }
+          </style>
+        </div>
+      -->
+
       <h2>Button theme</h2>
       <headless-button priority="primary">test</headless-button>
       <p>A theme can be applied to the <code>headless-button</code> by using it inside a <code>theme-provider</code> element.</p>

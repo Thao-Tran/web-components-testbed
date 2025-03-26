@@ -3,7 +3,9 @@ import { Component, h, Prop } from '@stencil/core';
 @Component({
   tag: 'button-theme',
   shadow: false,
-  styleUrl: './index.css'
+  styleUrls: {
+    visible: './index.css'
+  }
 })
 export class ButtonTheme {
   // == Attributes =============================================================
