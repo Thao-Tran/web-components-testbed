@@ -1,4 +1,4 @@
-import { Component, h, Prop } from '@stencil/core';
+import { Component, h, Host } from '@stencil/core';
 
 @Component({
   tag: 'button-theme',
@@ -8,11 +8,8 @@ import { Component, h, Prop } from '@stencil/core';
   }
 })
 export class ButtonTheme {
-  // == Attributes =============================================================
-  @Prop({reflect: true}) theme = 'base'
-
   // == Rendering ==============================================================
   render() {
-    return <slot/>
+    return <Host/>
   }
 }

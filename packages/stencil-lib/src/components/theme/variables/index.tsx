@@ -1,16 +1,15 @@
-import { Component, h, Prop } from '@stencil/core';
+import { Component, h, Host } from '@stencil/core';
 
 @Component({
   tag: 'theme-variables',
   shadow: false,
-  styleUrl: './index.css'
+  styleUrls: {
+    visible: './index.css'
+  }
 })
 export class ThemeVariables {
-  // == Attributes =============================================================
-  @Prop({reflect: true}) theme = 'base'
-
   // == Rendering ==============================================================
   render() {
-    return <slot/>
+    return <Host/>
   }
 }

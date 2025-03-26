@@ -10,81 +10,132 @@
   </head>
   <body>
     <h2>Headless button</h2>
-    <headless-button priority="primary" autofocus>
-      test
-    </headless-button>
-    <p>The <code>headless-button</code> has no built-in styling</p>
-    <h3>Headless button - Default slot</h3>
+
     <headless-button priority="primary">test</headless-button>
+
+    <p>The <code>headless-button</code> has no built-in styling</p>
+
+    <h3>Headless button - Default slot</h3>
+
+    <headless-button priority="primary" disabled>test</headless-button>
+
     <p>Button content is provided via the <code>content</code> slot.</p>
+
     <headless-button priority="primary">
       <div>Vertical</div>
       <div>content</div>
     </headless-button>
+
     <p>Anything can go into the <code>content</code> slot.</p>
+
     <headless-button priority="primary">
       <button>
         test
       </button>
     </headless-button>
+
     <p>Even another button.</p>
+
     <h3>Headless button - <code>as-child</code> attribute</h3>
+
     <headless-button priority="secondary" as-child>
       <button>another test</button>
     </headless-button>
-    <p>The default <code>button</code> element can be overridden via the default slot with another <code>button</code> when the <code>as-child</code> attribute is <code>true</code>.</p>
+
+    <p>
+      The default <code>button</code> element can be overridden via the default slot with another <code>button</code> when the
+      <code>as-child</code> attribute is <code>true</code>.
+    </p>
+
     <headless-button priority="secondary" as-child>
       <code>I'm not a button</code>
     </headless-button>
-    <p>Or really any element.</p>
-    <h3>Headless button - <code>properties</code> property</h3>
-    <headless-button id="options-button"></headless-button>
-    <p>All button attributes can be provided in a <code>properties</code> property instead, but that requires some Javascript which isn't ideal.</p>
-    <theme-provider>
-      <!-- Uncomment to test overriding the button theme
-        <div slot="button">
-          <style slot="button">
-            theme-provider {
-              headless-button::part(base) {
-                color: blue;
-              }
-            }
-          </style>
-        </div>
-      -->
 
-      <h2>Button theme</h2>
+    <p>Or really any element.</p>
+
+    <h3>Headless button - <code>properties</code> property</h3>
+
+    <headless-button id="options-button"></headless-button>
+
+    <p>
+      All button attributes can be provided in a <code>properties</code> property instead, but that requires some Javascript
+      which isn't ideal.
+    </p>
+
+    <theme-provider>
+      <h2>Theme</h2>
+
       <headless-button priority="primary">test</headless-button>
-      <p>A theme can be applied to the <code>headless-button</code> by using it inside a <code>theme-provider</code> element.</p>
-      <headless-button priority="secondary">test</headless-button>
+
+      <p>
+        A theme can be applied to the <code>headless-button</code> by using it inside a <code>theme-provider</code> element.
+      </p>
+
+      <headless-button priority="secondary" disabled>test</headless-button>
+
       <p>This will allow the <code>priority</code> attributes to actually affect the styling of the buttons.</p>
+
       <headless-button priority="primary" as-child>
         <button>another test</button>
       </headless-button>
+
       <p>The theme will not be applied to overridden <code>root</code> slot children.</p>
-      <h3>Button theme - <code>properties</code> property</h3>
+
+      <h3>Theme - <code>properties</code> property</h3>
+
       <headless-button id="options-button"></headless-button>
-      <p>The <code>priority</code> field set inside the <code>properties</code> property will be applied as well.</p>
-    </theme-provider>
-    <h3>Button theme - Composable themes</h3>
-    <theme-provider>
-      <div slot="button">
-        <style slot="button">
-          theme-provider {
+
+      <p>
+        The <code>priority</code> field set inside the <code>properties</code> property will be applied as well.
+      </p>
+
+      <theme-provider>
+        <h3>Theme - Composable themes</h3>
+
+        <div slot="button">
+          <style>
+          :host {
             headless-button::part(base) {
-              /* color: blue; */
+              color: var(--theme-color-blue-5);
             }
           }
-        </style>
-      </div>
+          </style>
+        </div>
+
+        <headless-button priority="primary">test</headless-button>
+
+        <p>
+          The <code>theme-provider</code> provides a <code>button</code> slot that allows for just the button theme to be
+          overridden.
+        </p>
+
+        <p>
+          Styles from the <code>theme-provider</code> are scoped to the specific instance's children, so the
+          <code>theme-provider</code> can be used multiple times in the same page with different themes.
+        </p>
+      </theme-provider>
+    </theme-provider>
+    <theme-provider as-child>
+      <h3>Theme - <code>as-child</code> attribute</h3>
+
+      <style>
+        :host {
+          headless-button::part(base) {
+            color: var(--theme-color-blue-1, red);
+          }
+        }
+      </style>
 
       <headless-button priority="primary">test</headless-button>
-      <p>Currently trying to figure out how to scope the <code>theme-provider</code> styles within the component. Only managed to get the theme styles working by disabling the shadow DOM in theme components because the styles aren't being properly applied to <code>parts</code> of components that are slotted into the shadow DOM.</p>
-    </theme-provider>
 
+      <p>
+        There's also an <code>as-child</code> attribute that can be used to fully override all theme styling. Not sure if this
+        is useful but we'll see.
+      </p>
+    </theme-provider>
     <script>
       document.querySelectorAll('#options-button').forEach(button => {
-        button.properties = {priority: 'primary', text: 'foo', disabled: true, class: 'foo'}
+        button.properties = {priority: 'primary', text: 'foo', disabled: false, class: 'foo', onclick: () => alert('hello')}
       })
     </script>
   </body>
