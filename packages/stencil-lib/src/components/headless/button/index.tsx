@@ -1,4 +1,4 @@
-import { Component, Element, Prop, State, h } from '@stencil/core';
+import { Component, Element, Prop, h } from '@stencil/core';
 
 export type Priority = 'primary' | 'secondary' | 'tertiary'
 
@@ -8,15 +8,36 @@ export type Priority = 'primary' | 'secondary' | 'tertiary'
 })
 export class HeadlessButton implements Partial<HTMLButtonElement> {
   // == Attributes =============================================================
+  private _priority?: this['priority']
+  private _disabled?: this['disabled']
+
   /**
    * Type of button action
    */
-  @Prop({reflect: true}) priority?: Priority
+  @Prop({reflect: true})
+  get priority (): Priority {
+    return this._priority ?? this.properties?.priority
+  }
+  set priority (value: this['priority'] | undefined) {
+    this._priority = value
+  }
 
   /**
    * Indicates whether the control is disabled, meaning that it does not accept any clicks.
    */
-  @Prop({reflect: true}) disabled?: HTMLButtonElement['disabled']
+  @Prop({reflect: true})
+  get disabled (): HTMLButtonElement['disabled'] {
+    return this._disabled ?? this.properties?.disabled
+  }
+  set disabled (value: this['disabled'] | undefined) {
+    this._disabled = value
+  }
+
+  /**
+   * Indicates whether the default slot should override the root element or just provide button content.
+   */
+  @Prop({reflect: true}) asChild: boolean
+
 
   // == Properties =============================================================
   /**
@@ -51,35 +72,16 @@ export class HeadlessButton implements Partial<HTMLButtonElement> {
     return attributes
   }
 
-  @State()
-  get basePart (): string {
-    const parts = ['base']
-    const {properties, priority = properties.priority, disabled = properties.disabled} = this
-
-    if (priority) {
-      parts.push(priority)
-    }
-
-    if (disabled) {
-      parts.push('disabled')
-    } else {
-      parts.push('enabled')
-    }
-
-    return parts.join(' ')
-  }
-
   // == Rendering ==============================================================
   render() {
-    return <slot name="root">
+    return this.asChild ? <slot/> :
       <button
-        part={this.basePart}
+        part="base"
         {...this.reactiveAttributes}
       >
         {
-          this.properties?.text || <slot name="content"/>
+          this.properties?.text || <slot/>
         }
       </button>
-    </slot>
   }
 }
